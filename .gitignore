@@ -1,0 +1,47 @@
+# ===== 视频（全部排除）=====
+*.mp4
+*.m4v
+*.mov
+*.avi
+*.mkv
+*.webm
+*.flv
+*.wmv
+*.mpg
+*.mpeg
+*.ts
+*.m2ts
+*.vob
+*.3gp
+*.gif
+
+# ===== 模型权重（全部排除）=====
+*.safetensors
+*.ckpt
+*.pt
+*.pth
+*.bin
+*.onnx
+*.gguf
+*.ggml
+*.h5
+*.pb
+*.tflite
+*.engine
+*.trt
+*.plan
+models/
+checkpoints/
+weights/
+loras/
+
+# ===== 系统/杂项 =====
+Thumbs.db
+Desktop.ini
+.DS_Store
+*.tmp
+*.log
+
+# 注意：.gitignore 本身无法按文件大小过滤。
+# “大于 5MB 的文件不入库”由 hooks/pre-commit 在提交时拦截，
+# 新克隆后执行一次：git config core.hooksPath hooks（见 README.md）。

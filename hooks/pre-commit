@@ -1,0 +1,22 @@
+#!/bin/sh
+# 大小闸门：拒绝提交大于 5MB（5242880 字节）的文件。
+# .gitignore 不能按大小过滤，所以在 commit 时检查暂存区。
+# 启用方式（克隆后一次性）：git config core.hooksPath hooks
+limit=5242880
+fail=0
+oldifs=$IFS
+IFS='
+'
+for f in $(git -c core.quotepath=false diff --cached --name-only --diff-filter=ACM); do
+    size=$(git cat-file -s ":$f" 2>/dev/null) || continue
+    if [ "$size" -gt "$limit" ]; then
+        printf '✗ 超过5MB，拒绝提交: %s (%s 字节)\n' "$f" "$size" >&2
+        fail=1
+    fi
+done
+IFS=$oldifs
+if [ "$fail" -ne 0 ]; then
+    echo '大文件请放在仓库外（或改用 Git LFS），不要提交。' >&2
+    exit 1
+fi
+exit 0
